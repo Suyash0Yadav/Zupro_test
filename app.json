@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Zupro_test",
-    "slug": "Zupro_test",
+    "name": "Zupro",
+    "slug": "zupro",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
