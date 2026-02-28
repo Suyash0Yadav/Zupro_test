@@ -1,112 +1,206 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import { Fonts } from "@/constants/theme";
+import { Ionicons } from "@expo/vector-icons";
+import React from "react";
+import {
+    SafeAreaView,
+    ScrollView,
+    StatusBar,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
+} from "react-native";
 
-import { Collapsible } from '@/components/ui/collapsible';
-import { ExternalLink } from '@/components/external-link';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { IconSymbol } from '@/components/ui/icon-symbol';
-import { Fonts } from '@/constants/theme';
+const COLORS = {
+  primary: "#0A66C2", // LinkedIn Blue
+  background: "#F3F2EF", // LinkedIn Light Grey
+  card: "#FFFFFF",
+  textMain: "#000000",
+  textSecondary: "#666666",
+  border: "#E0E0E0",
+};
 
-export default function TabTwoScreen() {
+const GuideCard = ({
+  title,
+  description,
+  icon,
+  color,
+}: {
+  title: string;
+  description: string;
+  icon: keyof typeof Ionicons.glyphMap;
+  color: string;
+}) => (
+  <TouchableOpacity style={styles.card} activeOpacity={0.7}>
+    <View style={[styles.iconContainer, { backgroundColor: color + "10" }]}>
+      <Ionicons name={icon} size={28} color={color} />
+    </View>
+    <View style={styles.cardContent}>
+      <Text style={styles.cardTitle}>{title}</Text>
+      <Text style={styles.cardDescription}>{description}</Text>
+    </View>
+    <Ionicons name="chevron-forward" size={18} color="#999" />
+  </TouchableOpacity>
+);
+
+export default function ExploreScreen() {
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#D0D0D0', dark: '#353636' }}
-      headerImage={
-        <IconSymbol
-          size={310}
-          color="#808080"
-          name="chevron.left.forwardslash.chevron.right"
-          style={styles.headerImage}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText
-          type="title"
-          style={{
-            fontFamily: Fonts.rounded,
-          }}>
-          Explore
-        </ThemedText>
-      </ThemedView>
-      <ThemedText>This app includes example code to help you get started.</ThemedText>
-      <Collapsible title="File-based routing">
-        <ThemedText>
-          This app has two screens:{' '}
-          <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> and{' '}
-          <ThemedText type="defaultSemiBold">app/(tabs)/explore.tsx</ThemedText>
-        </ThemedText>
-        <ThemedText>
-          The layout file in <ThemedText type="defaultSemiBold">app/(tabs)/_layout.tsx</ThemedText>{' '}
-          sets up the tab navigator.
-        </ThemedText>
-        <ExternalLink href="https://docs.expo.dev/router/introduction">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Android, iOS, and web support">
-        <ThemedText>
-          You can open this project on Android, iOS, and the web. To open the web version, press{' '}
-          <ThemedText type="defaultSemiBold">w</ThemedText> in the terminal running this project.
-        </ThemedText>
-      </Collapsible>
-      <Collapsible title="Images">
-        <ThemedText>
-          For static images, you can use the <ThemedText type="defaultSemiBold">@2x</ThemedText> and{' '}
-          <ThemedText type="defaultSemiBold">@3x</ThemedText> suffixes to provide files for
-          different screen densities
-        </ThemedText>
-        <Image
-          source={require('@/assets/images/react-logo.png')}
-          style={{ width: 100, height: 100, alignSelf: 'center' }}
-        />
-        <ExternalLink href="https://reactnative.dev/docs/images">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Light and dark mode components">
-        <ThemedText>
-          This template has light and dark mode support. The{' '}
-          <ThemedText type="defaultSemiBold">useColorScheme()</ThemedText> hook lets you inspect
-          what the user&apos;s current color scheme is, and so you can adjust UI colors accordingly.
-        </ThemedText>
-        <ExternalLink href="https://docs.expo.dev/develop/user-interface/color-themes/">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Animations">
-        <ThemedText>
-          This template includes an example of an animated component. The{' '}
-          <ThemedText type="defaultSemiBold">components/HelloWave.tsx</ThemedText> component uses
-          the powerful{' '}
-          <ThemedText type="defaultSemiBold" style={{ fontFamily: Fonts.mono }}>
-            react-native-reanimated
-          </ThemedText>{' '}
-          library to create a waving hand animation.
-        </ThemedText>
-        {Platform.select({
-          ios: (
-            <ThemedText>
-              The <ThemedText type="defaultSemiBold">components/ParallaxScrollView.tsx</ThemedText>{' '}
-              component provides a parallax effect for the header image.
-            </ThemedText>
-          ),
-        })}
-      </Collapsible>
-    </ParallaxScrollView>
+    <SafeAreaView style={styles.container}>
+      <StatusBar barStyle="dark-content" />
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View style={styles.header}>
+          <Text style={styles.headerTitle}>Career Resources</Text>
+          <Text style={styles.headerSubtitle}>
+            Pro-tips to help you get hired faster
+          </Text>
+        </View>
+
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Preparation</Text>
+
+          <GuideCard
+            title="Optimizing Your Profile"
+            description="How to attract more employers with a professional profile."
+            icon="newspaper"
+            color={COLORS.primary}
+          />
+
+          <GuideCard
+            title="Resume Best Practices"
+            description="Standard formats that work for modern companies."
+            icon="document-text"
+            color="#057642" // LinkedIn dark green
+          />
+        </View>
+
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Engagement</Text>
+
+          <GuideCard
+            title="Networking 101"
+            description="How to reach out to recruiters professionally."
+            icon="people"
+            color="#915907" // LinkedIn brown
+          />
+
+          <GuideCard
+            title="Interview Skills"
+            description="Common questions and how to answer them confidently."
+            icon="videocam"
+            color="#783EC9"
+          />
+        </View>
+
+        <View style={styles.footer}>
+          <Text style={styles.footerText}>
+            Found a listing that looks suspicious?
+          </Text>
+          <TouchableOpacity style={styles.safetyButton}>
+            <Text style={styles.safetyButtonText}>Visit Safety Center</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  headerImage: {
-    color: '#808080',
-    bottom: -90,
-    left: -35,
-    position: 'absolute',
+  container: {
+    flex: 1,
+    backgroundColor: COLORS.background,
   },
-  titleContainer: {
-    flexDirection: 'row',
-    gap: 8,
+  header: {
+    backgroundColor: COLORS.card,
+    paddingHorizontal: 16,
+    paddingTop: 16,
+    paddingBottom: 20,
+    borderBottomWidth: 1,
+    borderBottomColor: COLORS.border,
+  },
+  headerTitle: {
+    fontSize: 22,
+    fontWeight: "700",
+    color: COLORS.textMain,
+    fontFamily: Fonts.sans,
+  },
+  headerSubtitle: {
+    fontSize: 14,
+    color: COLORS.textSecondary,
+    marginTop: 4,
+    fontFamily: Fonts.sans,
+  },
+  section: {
+    marginTop: 8,
+    backgroundColor: COLORS.card,
+    paddingVertical: 16,
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
+    borderColor: COLORS.border,
+  },
+  sectionTitle: {
+    fontSize: 16,
+    fontWeight: "700",
+    color: COLORS.textMain,
+    fontFamily: Fonts.sans,
+    paddingHorizontal: 16,
+    marginBottom: 12,
+  },
+  card: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: "#F0F0F0",
+  },
+  iconContainer: {
+    width: 48,
+    height: 48,
+    borderRadius: 8,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  cardContent: {
+    flex: 1,
+    marginLeft: 16,
+    marginRight: 8,
+  },
+  cardTitle: {
+    fontSize: 15,
+    fontWeight: "600",
+    color: COLORS.textMain,
+    fontFamily: Fonts.sans,
+  },
+  cardDescription: {
+    fontSize: 13,
+    color: COLORS.textSecondary,
+    marginTop: 2,
+    fontFamily: Fonts.sans,
+    lineHeight: 18,
+  },
+  footer: {
+    padding: 24,
+    alignItems: "center",
+    marginBottom: 40,
+  },
+  footerText: {
+    fontSize: 14,
+    color: COLORS.textSecondary,
+    textAlign: "center",
+    marginBottom: 12,
+    fontFamily: Fonts.sans,
+  },
+  safetyButton: {
+    borderWidth: 1,
+    borderColor: COLORS.primary,
+    paddingHorizontal: 20,
+    paddingVertical: 8,
+    borderRadius: 20,
+  },
+  safetyButtonText: {
+    color: COLORS.primary,
+    fontSize: 14,
+    fontWeight: "700",
+    fontFamily: Fonts.sans,
   },
 });
